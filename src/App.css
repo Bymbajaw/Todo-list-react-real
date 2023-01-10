@@ -8,3 +8,32 @@
 .checkbox{
   width: 20px;
 }
+
+
+.modal{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(221, 221, 211 / 90%);
+}
+
+.modal-body{
+  padding: 20px;
+  width: 450px;
+  height: 300px;
+  background-color: rgb(147, 144, 144);
+  right: 500px;
+  position: absolute;
+  top: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+}

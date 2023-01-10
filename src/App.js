@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState } from 'react'
-
+import Modal from './components/Modal';
 
 
 
@@ -17,6 +17,7 @@ const [task, setTask] = useState('')
 const [tasks, setTasks] = useState([])
 const [doneTotal, setDoneTotal] = useState(0);
 const [input, setInput] = useState("");
+const [modal, setModal] = useState(false);
 
 
 
@@ -27,11 +28,24 @@ const addTask = () =>{
     id: tasks.length,
     title:task,
     isDone: false,
-  
+    
   };
+  setModal(false)
 
   const newArr = [...tasks]
   newArr.push(newObj);
+
+
+  // if(ID !== "0"){
+  //   newArr.map((e) => {
+  //     if (e.id === ID){
+  //       e.title = task;
+  //     }
+  //     return e;
+  //   })
+  // }else{
+  //   newArr.push(newObj)
+  // }
 
 
   setTasks(newArr);
@@ -44,6 +58,7 @@ const addTask = () =>{
     setTasks(tasks);
     setTask("");
     setInput("");
+    setModal(false)
   })
 }
 
@@ -79,6 +94,7 @@ function editTask(id){
     if(e.id === id){
       setTask(e.title)
       setInput(id)
+      setModal(true)
     }})
 };
 
@@ -92,7 +108,9 @@ function deleteItem (id){
 }
 
 
-
+const handleModal = () => {
+  setModal(!modal);
+}
 
 
 
@@ -111,8 +129,11 @@ function deleteItem (id){
           value={task} 
           onChange={(e)=> setTask(e.target.value)} 
           placeholder='task oruulna uu.' />
-          <button  className='btn btn-primary' onClick={addTask}>
+          <button  className='btn btn-primary' onClick={addTask} >
             +Add
+          </button>
+          <button className='btn btn-primary' onClick={handleModal}>
+            Modal
           </button>
          </div>
         </div>
@@ -138,9 +159,18 @@ function deleteItem (id){
                   <button className='btn btn-danger col-md-6 col-5 col-sm-5' onClick={() => deleteItem(e.id)} >Delete</button>
                 </div>
               </div>
-            ))
-          }
+            ))}
         </div>
+        {modal && (
+          <Modal 
+            modal={modal}
+            setModal={handleModal}
+            task={task}
+            id={input}
+            setTask={setTask}
+            addTask={addTask}
+          />
+        )}
       </div>
     </div>
   );
