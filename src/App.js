@@ -18,6 +18,7 @@ const [tasks, setTasks] = useState([])
 const [doneTotal, setDoneTotal] = useState(0);
 const [input, setInput] = useState("");
 const [modal, setModal] = useState(false);
+const newArr  = ""
 
 
 
@@ -98,13 +99,14 @@ function editTask(id){
     }})
 };
 
-
+//delete item
 function deleteItem (id){
   const removeItem = tasks.filter((e) => {
     return e.id !== id;
   });
 
   setTasks(removeItem)
+  ShowDoneTotal(newArr);
 }
 
 
