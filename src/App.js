@@ -11,6 +11,14 @@ import Modal from './components/Modal';
 
 
 function App() {
+const init = {
+  id:"",
+  task:"",
+  type:0,
+  isImportant: false,
+  isDone: false, 
+};
+
 
 
 const [task, setTask] = useState('')
@@ -18,7 +26,9 @@ const [tasks, setTasks] = useState([])
 const [doneTotal, setDoneTotal] = useState(0);
 const [input, setInput] = useState("");
 const [modal, setModal] = useState(false);
-const newArr  = ""
+const [taskObj, setTaskObj] = useState(init);
+const newArr  = "";
+
 
 
 
@@ -34,19 +44,9 @@ const addTask = () =>{
   setModal(false)
 
   const newArr = [...tasks]
-  newArr.push(newObj);
+  newArr.push({...taskObj, id: input()});
+  
 
-
-  // if(ID !== "0"){
-  //   newArr.map((e) => {
-  //     if (e.id === ID){
-  //       e.title = task;
-  //     }
-  //     return e;
-  //   })
-  // }else{
-  //   newArr.push(newObj)
-  // }
 
 
   setTasks(newArr);
@@ -131,7 +131,13 @@ const handleModal = () => {
           value={task} 
           onChange={(e)=> setTask(e.target.value)} 
           placeholder='task oruulna uu.' />
-          <button  className='btn btn-primary' onClick={addTask} >
+          <button  className='btn btn-primary' onClick={()=> {
+            setTask('');
+            setTaskObj([
+              ...taskObj,
+              {id: newArr, name: task}
+            ]);
+          }} >
             +Add
           </button>
           <button className='btn btn-primary' onClick={handleModal}>
@@ -171,6 +177,8 @@ const handleModal = () => {
             id={input}
             setTask={setTask}
             addTask={addTask}
+            taskObj={taskObj}
+            setTaskObj = {setTaskObj}
           />
         )}
       </div>

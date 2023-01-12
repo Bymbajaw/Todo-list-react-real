@@ -1,4 +1,4 @@
-export default function Modal({setModal, modal, id, task, setTask, addTask}){
+export default function Modal({setModal, modal, id, task, setTask, addTask, taskObj, setTaskObj}){
     const dn = modal ? "block" : "none";
     return(
         <div className="modal" style={{display: dn}} onClick={setModal}>
@@ -11,8 +11,10 @@ export default function Modal({setModal, modal, id, task, setTask, addTask}){
                         id="HAH"
                         className="form-control"
                         type={"text"}
-                        value={task}
-                        onChange={(e) => setTask(e.target.value)}
+                        value={taskObj.task}
+                        onChange={(e) =>{
+                            setTaskObj({...taskObj, task: e.target.value})
+                        }}
                         placeholder="TASK ORUULNA UU"
                     />
                     <input type={"hidden"} value={id} />
