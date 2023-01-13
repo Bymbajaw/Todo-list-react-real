@@ -1,5 +1,12 @@
-export default function Modal({setModal, modal, id, task, setTask, addTask, taskObj, setTaskObj}){
+export default function Modal({
+    setModal, 
+    modal, 
+    addTask, 
+    taskObj, 
+    setTaskObj
+}){
     const dn = modal ? "block" : "none";
+
     return(
         <div className="modal" style={{display: dn}} onClick={setModal}>
             <div className="modal-body" onClick={(e) => e.stopPropagation()}>
@@ -15,9 +22,9 @@ export default function Modal({setModal, modal, id, task, setTask, addTask, task
                         onChange={(e) =>{
                             setTaskObj({...taskObj, task: e.target.value})
                         }}
-                        placeholder="TASK ORUULNA UU"
+                        placeholder="TASK ORUULNA UU"   
                     />
-                    <input type={"hidden"} value={id} />
+                    <input type={"hidden"} value={taskObj.id} />
                     <button className="btn btn-primary" onClick={addTask}  >
                         +Add
                     </button>

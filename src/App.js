@@ -1,6 +1,7 @@
 import './App.css';
 import React, { useState } from 'react'
 import Modal from './components/Modal';
+import TodoList from './components/TodoList';
 
 
 
@@ -33,37 +34,29 @@ const newArr  = "";
 
 
 //add task
-const addTask = () =>{
-  if(input.length === 0){
-  const newObj = {
-    id: tasks.length,
-    title:task,
-    isDone: false,
-    
-  };
-  setModal(false)
+const addTask = (e) =>{
+  console.log(taskObj);
 
   const newArr = [...tasks]
-  newArr.push({...taskObj, id: input()});
-  
-
-
-
+  newArr.push({...taskObj, id: tasks.length });
   setTasks(newArr);
-  setTask('')
-}else{
-  tasks.map((a) => {
-    if(a.id === input){
-      a.title = task
-    }
-    setTasks(tasks);
-    setTask("");
-    setInput("");
-    setModal(false)
-  })
+  
+  // setTask('')
+  setModal(false);
+  setTaskObj(init)
 }
-
-};
+// else{
+//   tasks.map((a) => {
+//     if(a.id === input){
+//       a.title = task
+//     }
+//     setTasks(tasks);
+//     setTask("");
+//     setInput("");
+//     setModal(false)
+//   })
+// }
+// };
 
 
 const onDoneTask = (id)=> {
@@ -93,8 +86,9 @@ function ShowDoneTotal() {
 function editTask(id){
   tasks.map((e)=> {
     if(e.id === id){
-      setTask(e.title)
-      setInput(id)
+     
+      setTaskObj({...taskObj, task : e.task})
+      // setInput(id)
       setModal(true)
     }})
 };
@@ -117,65 +111,32 @@ const handleModal = () => {
 
 
 
-  return (
+return (
     <div className="container">
-      <div className='row mt-4'>
-        <div className='col-md-12'>
+      <div>
+        <div>
           <h1>Todo List</h1>
-          Total {tasks.length}
-          <p>Done {doneTotal}</p>
-         <div className='d-flex gap-3'>
-          <input 
-          className='form-control'
-          type="text" 
-          value={task} 
-          onChange={(e)=> setTask(e.target.value)} 
-          placeholder='task oruulna uu.' />
-          <button  className='btn btn-primary' onClick={()=> {
-            setTask('');
-            setTaskObj([
-              ...taskObj,
-              {id: newArr, name: task}
-            ]);
-          }} >
-            +Add
+          <div> Total {tasks.length}</div>
+          <div> Done {doneTotal}</div>
+          <button className='btn btn-primary' onClick={setModal}>
+            +Add Task
           </button>
-          <button className='btn btn-primary' onClick={handleModal}>
-            Modal
-          </button>
-         </div>
         </div>
+
+
+        <TodoList 
+          tasks={tasks}
+          deleteItem={deleteItem}
+          editTask={editTask}
+          onDoneTask={onDoneTask}
+          // input={input}
+        />
       </div>
-      <div className='row mt-3'> 
-        <div className='col-md-12'>
-          {
-            tasks.map((e)=>(
-              <div className="d-flex justify-content-between align-items-center mt-2">
-                <div className='d-flex'>
-                  <input 
-                  type="checkbox"  
-                  className='checkbox'
-                  checked={e.isDone} 
-                  onChange={()=>onDoneTask(e.id)} 
-                  />
-                  <input value={input} type='hidden' />
-                  <h4>{e.title}</h4>
-                  
-                </div>
-                <div className='row col-md-4 col-sm-4 col-5 justify-content-between'>
-                  <button className='btn btn-warning col-md-5 col-5 col-sm-5' onClick={() => editTask(e.id)}>Edit</button>
-                  <button className='btn btn-danger col-md-6 col-5 col-sm-5' onClick={() => deleteItem(e.id)} >Delete</button>
-                </div>
-              </div>
-            ))}
-        </div>
+      <div>
         {modal && (
           <Modal 
             modal={modal}
             setModal={handleModal}
-            task={task}
-            id={input}
-            setTask={setTask}
             addTask={addTask}
             taskObj={taskObj}
             setTaskObj = {setTaskObj}
