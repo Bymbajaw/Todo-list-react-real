@@ -22,10 +22,8 @@ deleteItem,
                                     type="checkbox"
                                     className='checkbox'
                                     checked={e.isDone}
-                                    onChange={() => onDoneTask(e.id)} />
-                                {/* <input value={input} type='hidden' /> */}
-                                <h4>{e.task}</h4>
-
+                                    onChange={() => onDoneTask(e.id)} />                                
+                                    <h4>{e.task}</h4>
                             </div>
                             <div className='row col-md-4 col-sm-4 col-5 justify-content-between'>
                                 <button className='btn btn-warning col-md-5 col-5 col-sm-5' onClick={() => editTask(e.id, e.task, e.isDone, e.type, e.isImportant)}>Edit</button>

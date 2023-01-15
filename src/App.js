@@ -25,10 +25,12 @@ const init = {
 const [task, setTask] = useState('')
 const [tasks, setTasks] = useState([])
 const [doneTotal, setDoneTotal] = useState(0);
-const [input, setInput] = useState("");
+// const [input, setInput] = useState("");
 const [modal, setModal] = useState(false);
 const [taskObj, setTaskObj] = useState(init);
+const [ID, setId] = useState("0")
 const newArr  = "";
+
 
 
 
@@ -37,13 +39,30 @@ const newArr  = "";
 const addTask = (e) =>{
   console.log(taskObj);
 
-  const newArr = [...tasks]
-  newArr.push({...taskObj, id: tasks.length });
-  setTasks(newArr);
-  
+if(ID !== "0"){
+  newArr.map((e) => {
+    if( e.id === ID) {
+      e.title = task
+    }
+    return e;
+  });
+} else{
+
+}
+
+
+const newArr = [...tasks]
+newArr.push({...taskObj, id: createId() });
+setTasks(newArr);
+
+
+//edit
+setTasks([...tasks, { ...taskObj, id: createId() }])
   // setTask('')
   setModal(false);
   setTaskObj(init)
+
+
 }
 // else{
 //   tasks.map((a) => {
@@ -65,6 +84,8 @@ const onDoneTask = (id)=> {
       val.isDone = !val.isDone
 
       setDoneTotal(doneTotal + 1);
+    }else {
+      setDoneTotal(doneTotal -1);
     }
     return val;
   })
@@ -77,20 +98,30 @@ const onDoneTask = (id)=> {
 
 function ShowDoneTotal() {
   const arr = tasks.filter(e => e.isDone === true);
-
-  setDoneTotal(arr.length);
+  
+  // setDoneTotal(arr.length);
+  doneTotalTask(newArr)
 }
 
 
+const doneTotalTask = (data) => {
+  const lenArr = data.filter ((e) => e.isDone == true);
+  setDoneTotal(lenArr.length)
+}
+
 //edit item
-function editTask(id){
-  tasks.map((e)=> {
-    if(e.id === id){
+const editTask = ( id, task, isDone, type, isImportant) => {
+  if(!isDone){
+    setTaskObj({id, task, isDone, type, isImportant});
+    setModal(true);
+  }
+  // tasks.map((e)=> {
+  //   if(e.id === id){
      
-      setTaskObj({...taskObj, task : e.task})
-      // setInput(id)
-      setModal(true)
-    }})
+  //     setTaskObj({...taskObj, task : e.task})
+  //     // setInput(id)
+  //     setModal(true)
+  //   }})
 };
 
 //delete item
@@ -98,7 +129,7 @@ function deleteItem (id){
   const removeItem = tasks.filter((e) => {
     return e.id !== id;
   });
-
+  
   setTasks(removeItem)
   ShowDoneTotal(newArr);
 }
@@ -107,6 +138,33 @@ function deleteItem (id){
 const handleModal = () => {
   setModal(!modal);
 }
+
+
+
+function createId() {
+  let abc = "ABCDEFJHJKLMNO";
+
+  let num = "1234567890";
+
+  console.log(Math.random(1 * 10));
+
+  let newStr =
+    abc.split("")[Math.floor(Math.random() * 10 + 1)] +
+    abc.split("")[Math.floor(Math.random() * 10 + 1)] +
+    abc.split("")[Math.floor(Math.random() * 10 + 1)];
+
+  let newNumber =
+    num.split("")[Math.floor(Math.random() * 10)] +
+    "" +
+    num.split("")[Math.floor(Math.random() * 10)] +
+    "" +
+    num.split("")[Math.floor(Math.random() * 10)];
+
+  console.log(newStr + newNumber);
+
+  return newStr + newNumber;
+}
+
 
 
 
